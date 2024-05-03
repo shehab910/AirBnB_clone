@@ -14,7 +14,7 @@ class FileStorage:
         """Return dictionary of objects"""
         return FileStorage.__objects
 
-    def new(self, obj):
+    def new(self, obj: BaseModel):
         """Add object to __objects"""
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
