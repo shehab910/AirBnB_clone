@@ -1,8 +1,8 @@
 #!/usr/bin/python3
+"""FileStorage module"""
 import json
 from models.base_model import BaseModel
 from typing import Dict
-"""FileStorage module"""
 
 
 class FileStorage:
