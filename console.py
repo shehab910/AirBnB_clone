@@ -3,11 +3,21 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.review import Review
+from models.place import Place
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
 from models import storage
 
 classes = {
     "BaseModel": BaseModel,
     "User": User,
+    "Amenity": Amenity,
+    "City": City,
+    "Place": Place,
+    "Review": Review,
+    "State": State,
 }
 
 
