@@ -123,6 +123,35 @@ class HBNBCommand(cmd.Cmd):
         setattr(obj, args[2], args[3])
         storage.save()
 
+    def do_count(self, line):
+        """Count command to count the number of instances"""
+        if len(line) == 0:
+            print(len(storage.all()))
+            return
+        if line not in classes.keys():
+            print("** class doesn't exist **")
+            return
+        print(len([obj for obj in storage.all().values()
+                  if obj.__class__.__name__ == line]))
+
+    def precmd(self, line: str) -> str:
+        """This method is called before the command is executed"""
+        if "." in line and "(" in line:
+            command, className, args = parse_word_cmd(line)
+            line = "{} {} {}".format(command, className, " ".join(args))
+        return super().precmd(line)
+
+
+def parse_word_cmd(line: str) -> tuple[str, str, list[str]]:
+    """This function parses a word command"""
+    cmds = line.split(".")
+    className = cmds[0]
+    argsStartI = cmds[1].find("(")
+    command = cmds[1][:argsStartI]
+    args = cmds[1][argsStartI+1:-1].split(",")
+    args = [arg.strip(" \"\'") for arg in args]
+    return command, className, args
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
