@@ -134,12 +134,20 @@ class HBNBCommand(cmd.Cmd):
         print(len([obj for obj in storage.all().values()
                   if obj.__class__.__name__ == line]))
 
-    def precmd(self, line: str) -> str:
+    def onecmd(self, line):
         """This method is called before the command is executed"""
+        line = self.ensure_main_format(line)
+        return super().onecmd(line)
+
+    def precmd(self, line: str) -> str:
+        line = self.ensure_main_format(line)
+        return super().precmd(line)
+
+    def ensure_main_format(self, line: str) -> str:
         if "." in line and "(" in line:
             command, className, args = parse_word_cmd(line)
             line = "{} {} {}".format(command, className, " ".join(args))
-        return super().precmd(line)
+        return line
 
 
 def parse_word_cmd(line: str) -> tuple[str, str, list[str]]:
