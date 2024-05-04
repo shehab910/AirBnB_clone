@@ -2,19 +2,22 @@
 """FileStorage module"""
 import json
 from models.base_model import BaseModel
-from typing import Dict
+from models.user import User
+from typing import Dict, Union
+
+ClassesT = Union[BaseModel, User]
 
 
 class FileStorage:
     """FileStorage class"""
     __file_path = "file.json"
-    __objects: Dict[str, BaseModel] = {}
+    __objects: Dict[str, ClassesT] = {}
 
     def all(self):
         """Return dictionary of objects"""
         return FileStorage.__objects
 
-    def new(self, obj: BaseModel):
+    def new(self, obj: ClassesT):
         """Add object to __objects"""
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
